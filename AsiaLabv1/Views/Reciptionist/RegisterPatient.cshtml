@@ -282,9 +282,12 @@
                                 }
                             }
 
-
+                                    var currentSubCatId = -1;
                                     function getTests(SubCatId) {
+                                        currentSubCatId = SubCatId;
                                         if (SubCatId==-1) {
+                                            $('#Tests').empty();
+                                            PatientTests = [];
                                             return ;
                                         }
                                             $.ajax({
@@ -294,10 +297,13 @@
                                                 dataType: "json",
                                                 success: function (data) {
                                                     $('#Tests').empty();
+                                                    PatientTests = [];
                                                     for (var i = 0; i < data.length; i++) {
+                                                       
                                                         $('#Tests').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'>" + data[i].Id + "</div> <div class='col-xs-6 col-sm-4'>" + data[i].TestSubcategoryName + "</div><div class='col-md-2'>Rs." + data[i].Rate + "/=</div><div class='col-md-1'> &nbsp; <input type='checkbox' onclick='addTest(" + data[i].Id + ")'></div></div>");
 
-                                                            PatientTests[data[i].Id] = {
+                                                        PatientTests[data[i].Id] = {
+                                                                catId: SubCatId,
                                                                 TestName: data[i].TestSubcategoryName,
                                                                 Rate: data[i].Rate
                                                             };
@@ -313,8 +319,9 @@
                         function removeSelectedTest(TestId) {
                             $('#SelectedTests').empty();
                             $('#Tests').empty();
-                            PatientTests[TestId] = tempPatientTests[TestId];
-
+                            if (tempPatientTests[TestId].catId==currentSubCatId) {
+                                PatientTests[TestId] = tempPatientTests[TestId];
+                            }
                             delete tempPatientTests[TestId];
 
                             for (var i = 0; i < SelectedPatientTests.length; i++) {
@@ -344,11 +351,12 @@
                                 Rate: PatientTests[Id].Rate
                             };
                             $('#Tests').empty();
+                            netAmount = netAmount + parseInt(PatientTests[Id].Rate);
                             delete PatientTests[Id];
                             for (var key in PatientTests) {
                                 $('#Tests').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'>" + key + "</div> <div class='col-xs-6 col-sm-4'>" + PatientTests[key].TestName + "</div><div class='col-md-2'>Rs." + PatientTests[key].Rate + "/=</div><div class='col-md-1'> &nbsp;<input type='checkbox' onclick='addTest(" + key + ")'></div></div>");
                             }
-                            netAmount = netAmount + parseInt(PatientTests[Id].Rate);
+                            
 
                             $('#SelectedTests').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'></div> <div class='col-xs-6 col-sm-4'></div><div class='col-md-2'>Total Amount:</div><div class='col-md-1'>"+netAmount+"</div></div>");
 
@@ -357,6 +365,7 @@
 
                         function getSubCategory(deptId) {
                             if (deptId==-1) {
+
                                 return ;
                             }
                             $.ajax({
@@ -365,7 +374,7 @@
                                 data: { Id: deptId },
                                 dataType: "json",
                                 success: function (data) {
-                                    var PatientTests = [];
+                                    PatientTests = [];
                                     $('#subcategories').empty();
                                     $('#subcategories').append('<option value="-1" >--Select Sub category--</option>');
                                     for (var i = 0; i < data.length; i++) {
