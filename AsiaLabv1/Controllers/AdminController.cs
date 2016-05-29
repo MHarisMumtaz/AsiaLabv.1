@@ -294,7 +294,7 @@ namespace AsiaLabv1.Controllers
 
         public ActionResult FillDropdownKendo(string isFill, string subCategId)
         {
-            CategId = isFill == "none" ? Convert.ToInt16(subCategId) : CategId;
+           CategId = isFill == "none" ? Convert.ToInt16(subCategId) : CategId;
             if (isFill == "" || isFill == null)
             {
 

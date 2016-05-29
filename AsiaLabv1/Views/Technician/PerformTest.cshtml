@@ -23,7 +23,7 @@
         <a href="@Url.Action("TechnicianDashboard", "Main")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a>
     </li>
 
-    <li><a href="@Url.Action("PerformTest", "Technician")" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i>Perform Test</a></li>
+   
 
 
 
@@ -55,7 +55,7 @@
 
                     <div class="row show-grid">
                         <div class="col-xs-6 col-sm-3">Test Name</div>
-                        <div class="col-md-1">Result</div>
+                        <div class="col-md-1" >Result</div>
 
                         <div class="col-xs-6 col-sm-3">Lower Bound</div>
                         <div class="col-xs-6 col-sm-3">Upper Bound</div>
@@ -81,11 +81,11 @@
 
                 <div class="col-sm-2 login-do" style="margin-left:40%">
                     <label class="hvr-shutter-in-horizontal login-sub">
-                        <input type="button" id="btninsert" value="Submit Test" />
+                        <input type="button" id="btninsert" class="btn btn-danger" value="Submit Test" />
                     </label>
                 </div>
 
-
+                
                 <div class="clearfix"> </div>
                 
             </div>
@@ -98,6 +98,7 @@
 <script type="text/javascript">
 
     window.onload = getTests;
+    
 
     function getTests(){
 
@@ -112,19 +113,22 @@
 
                     for (var i = 0; i < data[0].PatientTests.length; i++) {
                       
-                        $('#tests').append('<div class="col-xs-6 col-sm-3" id="testname' + i + '">' + data[0].PatientTests[i].testName + '<br /></div>');
-                        var check = data[0].PatientTests[i].testName.subString(0, 5).toLower();
-                        alert(check);
+                        $('#tests').append('<div style="margin-top:3px" class="col-xs-6 col-sm-3" id="testname' + i + '">' + data[0].PatientTests[i].testName + '<br /></div>');
+                        //var check = data[0].PatientTests[i].testName.subString(0, 5).toLower();
+                        //alert(check);
                         //if (data[0].PatientTests[i].testName.subString(0,5).toLower()==='x-ray') {
 
                         //}
-                        $('#tests').append('<div class="col-md-1"  id="testresult' + i + '"><input type="text" class="form-control" id="focusedinput' + i + '"/"></div>');
-                        $('#tests').append('<div class="col-xs-6 col-sm-3" id="testlowerbound' + i + '">' + data[0].PatientTests[i].lowerBound + '</div>');
-                        $('#tests').append('<div class="col-xs-6 col-sm-3"  id="testupperbound' + i + '">' + data[0].PatientTests[i].upperBound + '</div>');
-                        $('#tests').append('<div class="col-md-1"  id="testunit' + i + '">' + data[0].PatientTests[i].unit + '<br /></div>');
+                        $('#tests').append('<div style="margin-top:3px" class="col-md-1"  id="testresult' + i + '"><input type="text" maxlength="5" style="height:22px" class="form-control" id="actualresult"' + i + '"/"></div>');
+                        $('#tests').append('<div style="margin-top:3px" class="col-xs-1 col-sm-3" id="testlowerbound' + i + '">' + data[0].PatientTests[i].lowerBound + '</div>');
+                        $('#tests').append('<div style="margin-top:3px" class="col-xs-6 col-sm-3"  id="testupperbound' + i + '">' + data[0].PatientTests[i].upperBound + '</div>');
+                        $('#tests').append('<div style="margin-top:3px" class="col-md-1"  id="testunit' + i + '">' + data[0].PatientTests[i].unit + '</div>');
+
+                       
                        
                     }
                     //Xray and Ultrasound
+                    
                 },
                 error: function (data) {
                     alert('Error');
@@ -132,6 +136,8 @@
             });
 
     }
+
+    
 
     $('#btninsert').click(function () {
 
@@ -152,7 +158,7 @@
             traditional: true,
             data: { result: results },
             dataType: "json",
-<<<<<<< HEAD
+
             success: function (data) {
                 alert('Performed');
                 //Yaha achi chezay krdena :p
@@ -160,13 +166,18 @@
 
             },
            
-=======
 
->>>>>>> 0d1659542e33120b0646a15d358f6f7f7446fa57
         });
 
       
     });
+
+    //For Results
+    
+    
+ 
+
+      
 
 
 
