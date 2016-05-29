@@ -18,6 +18,7 @@ namespace AsiaLabv1.Controllers
 
         public ActionResult LoginPage()
         {
+            ViewBag.LoginFailed = false;
             return View("LoginPage");
         }
 
@@ -85,6 +86,7 @@ namespace AsiaLabv1.Controllers
 
             if (model==null)
             {
+                ViewBag.LoginFailed = true;
                 return RedirectToAction("LoginPage", "Main");
 
             }
