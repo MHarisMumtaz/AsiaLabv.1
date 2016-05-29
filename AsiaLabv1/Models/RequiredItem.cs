@@ -19,6 +19,10 @@ namespace AsiaLabv1
         public double lowerBound { get; set; }
         public string unit { get; set; }
         public double rate { get; set; }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 93c976c8408ce277db4c32f4df7247f844c48f05
     }
 
     public class RequiredPatient
@@ -35,8 +39,13 @@ namespace AsiaLabv1
         public string PatientName { get; set; }
 
         public List<RequiredTest> PatientTests { get; set; }
+<<<<<<< HEAD
     }
 
 } 
     
 
+=======
+    }  
+}
+>>>>>>> 93c976c8408ce277db4c32f4df7247f844c48f05
