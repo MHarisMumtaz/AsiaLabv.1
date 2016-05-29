@@ -107,18 +107,24 @@
                 dataType: "json",
                 success: function (data) {
                     
-                    $('#patientinfo').append('<h5 id="grid-example-mixed-complete">Patient No. ' + data[0].PatientNumber + '</h5>');
+                    $('#patientinfo').append('<h5 id="grid-example-mixed-complete">Patient No. ' + data[0].Id + '</h5>');
                     $('#patientinfo').append('<h5 id="grid-example-mixed-complete">Patient Name: '+ data[0].PatientName+'</h5>');
 
                     for (var i = 0; i < data[0].PatientTests.length; i++) {
                       
-                        $('#tests').append('<div class="col-xs-6 col-sm-3" id="testname'+i+'">' + data[0].PatientTests[i].testName + '<br /></div>');
+                        $('#tests').append('<div class="col-xs-6 col-sm-3" id="testname' + i + '">' + data[0].PatientTests[i].testName + '<br /></div>');
+                        var check = data[0].PatientTests[i].testName.subString(0, 5).toLower();
+                        alert(check);
+                        //if (data[0].PatientTests[i].testName.subString(0,5).toLower()==='x-ray') {
+
+                        //}
                         $('#tests').append('<div class="col-md-1"  id="testresult' + i + '"><input type="text" class="form-control" id="focusedinput' + i + '"/"></div>');
                         $('#tests').append('<div class="col-xs-6 col-sm-3" id="testlowerbound' + i + '">' + data[0].PatientTests[i].lowerBound + '</div>');
                         $('#tests').append('<div class="col-xs-6 col-sm-3"  id="testupperbound' + i + '">' + data[0].PatientTests[i].upperBound + '</div>');
                         $('#tests').append('<div class="col-md-1"  id="testunit' + i + '">' + data[0].PatientTests[i].unit + '<br /></div>');
                        
                     }
+                    //Xray and Ultrasound
                 },
                 error: function (data) {
                     alert('Error');
@@ -146,6 +152,12 @@
             traditional: true,
             data: { result: results },
             dataType: "json",
+            success: function (data) {
+                alert('Performed');
+                //Yaha achi chezay krdena :p
+                window.location.href = "/Main/TechnicianDashboard"
+
+            },
            
         });
 
