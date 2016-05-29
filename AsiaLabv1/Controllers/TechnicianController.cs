@@ -32,7 +32,7 @@ namespace AsiaLabv1.Controllers
                            //PatientNumber=item.Patient.PatientNumber
                            Id=item.Id,
                            PatientName=item.PatientName,
-                           PatientNumber=item.PatientNumber
+                           PatientNumber=item.Id.ToString(),
 
                         });
                     }
@@ -59,7 +59,7 @@ namespace AsiaLabv1.Controllers
             List<RequiredTest> rt = new List<RequiredTest>();
 
                 _patienttestId = patientDetails[0].Id;
-                var pno = patientDetails[0].Patient.PatientNumber;
+                var pno = patientDetails[0].Patient.Id;
                 var pname = patientDetails[0].Patient.PatientName;
                 var ptests = patientDetails[0].Patient.PatientTests;
 
@@ -81,7 +81,7 @@ namespace AsiaLabv1.Controllers
 
                 TechnicianItems.Add(new RequiredTechnicianItems { 
                 
-                PatientNumber=pno,
+                PatientNumber=pno.ToString(),
                 PatientName=pname,
                 PatientTests=rt
                 
@@ -118,7 +118,7 @@ namespace AsiaLabv1.Controllers
             });
 
 
-            return RedirectToAction("TechnicianDashboard","Main");
+            return Json("Successfull");
         }
         
 
