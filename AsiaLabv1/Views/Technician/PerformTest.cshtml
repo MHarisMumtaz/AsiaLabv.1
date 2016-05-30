@@ -125,7 +125,11 @@
 
                     for (var i = 0; i < data[0].PatientTests.length; i++) {
                       
+<<<<<<< HEAD
+                        $('#tests').append('<div class="col-xs-6 col-sm-3" id="testname' + i + '">' + data[0].PatientTests[i].testName + '<br /></div>');
+=======
                         $('#tests').append('<div style="margin-top:3px" class="col-xs-6 col-sm-3" id="testname' + i + '">' + data[0].PatientTests[i].testName + '<br /></div>');
+>>>>>>> 735bd9f654feb66f4fab67e147ecdd990b919830
                         //var check = data[0].PatientTests[i].testName.subString(0, 5).toLower();
                         //alert(check);
                         //if (data[0].PatientTests[i].testName.subString(0,5).toLower()==='x-ray') {
@@ -186,7 +190,10 @@
             traditional: true,
             data: { result: results },
             dataType: "json",
+<<<<<<< HEAD
+=======
 
+>>>>>>> 735bd9f654feb66f4fab67e147ecdd990b919830
             success: function (data) {
                 alert('Performed');
                 //Yaha achi chezay krdena :p
@@ -194,7 +201,10 @@
 
             },
            
+<<<<<<< HEAD
+=======
 
+>>>>>>> 735bd9f654feb66f4fab67e147ecdd990b919830
         });
 
       

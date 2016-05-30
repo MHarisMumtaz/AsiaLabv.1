@@ -39,7 +39,7 @@
         <div class="content-top-1">
             <div class="col-md-6 top-content">
                 <h5>Tests Pending for Approval</h5>
-                <label>19</label>
+                <label id="testscount"></label>
             </div>
             <div class="col-md-6 top-content1">
                 <div id="demo-pie-1" class="pie-title-center" data-percent="25"> <span class="pie-value"></span> </div>
@@ -58,7 +58,7 @@
 <!---->
 <div class="typo-grid">
 
-    <div class="typo-1" s>
+    <div class="typo-1">
 
 
         <div class="grid_3 grid_5">
@@ -83,7 +83,8 @@
                                         </div>
                                         <!---->
 
-                                        <div class="row show-grid">
+                                        <div id="grid"></div>
+                                        @*<div class="row show-grid">
                                             <div class="col-xs-6 col-sm-3">Patient no.</div>
                                             <div class="col-xs-6 col-sm-3">Patient Name</div>
                                             <div class="col-xs-6 col-sm-3">Test Options</div>
@@ -111,7 +112,7 @@
                                             </div>
 
 
-                                        </div>
+                                        </div>*@
 
 
                                     </div>
@@ -176,6 +177,91 @@
 
 
 </div>
+
+<script type="text/javascript">
+
+
+    setInterval(kendoGrid, 60000);
+
+    window.onload = kendoGrid();
+
+    function kendoGrid() {
+        var crudServiceBaseUrl = "/Doctor",
+                dataSource = new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            url: crudServiceBaseUrl + "/GetPatientInfo",
+                            dataType: "json",
+
+                        },
+
+                        parameterMap: function (options, operation) {
+
+                            if (operation !== "read" && options.models) {
+                                return { models: kendo.stringify(options.models) };
+                            }
+                        },
+
+                    },
+                    batch: true,
+                    pageSize: 20,
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: {
+                                PatientNumber: { type: "string" },
+                            }
+                        }
+                    },
+                    completed: function () { },
+                    requestEnd: function (e) { $('#grid').data('kendoGrid').refresh(); },
+                });
+
+        $("#grid").kendoGrid({
+            dataSource: dataSource,
+            dataBound: onDataBound,
+            pageable: true,
+            height: 550,
+            //toolbar: ["create"],
+            columns: [
+
+                  { field: "PatientNumber", title: "Patient Id", width: "130px" },
+                  { field: "PatientName", title: "Patient Name", width: "130px" },
+                  { command: { text: "Approve Test", click: redirect }, title: "", width: "250px" },
+            ],
+            editable: "inline"
+        });
+
+
+    };
+
+    function redirect(e) {
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+        $.ajax({
+            type: 'POST',
+            url: '/Doctor/Temp/',
+            data: { patientId: dataItem.id },
+            dataType: "json",
+
+        });
+
+        window.location.href = "/Doctor/ApproveTest"
+    }
+
+    function onDataBound(arg) {
+        var grid = $("#grid").data("kendoGrid");
+        var dataSource = grid.dataSource;
+
+        var totalRecords = dataSource.total();
+        $("#testscount").text(totalRecords);
+    }
+
+
+
+</script>
+
 
 <!----->
 <!--//content-->

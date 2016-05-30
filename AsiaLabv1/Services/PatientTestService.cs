@@ -14,6 +14,8 @@ namespace AsiaLabv1.Services
         Repository<Patient> _PatientRepository = new Repository<Patient>();
         Repository<PatientTestResult> _PatientTestResultRepository= new Repository<PatientTestResult>();
         Repository<TechnicianPatientsTest> _TechnicianPatientTestRepository = new Repository<TechnicianPatientsTest>();
+        Repository<DoctorPatientsTest> _DoctorsPatientsTestsRepository = new Repository<DoctorPatientsTest>();
+        Repository<DoctorComment> _DoctorCommentsRepository = new Repository<DoctorComment>();
 
         public void Add(PatientTest Patienttest)
         {
@@ -49,6 +51,27 @@ namespace AsiaLabv1.Services
             return query;
         }
 
+        public List<Patient> GetPatientTestsDoctor()
+        {
+            var abc=(from ptr in _PatientTestResultRepository.Table
+                         where ptr.ApprovalStatus=="Approved"
+                         select ptr.PatientTestId).ToList();
+
+            var check2 = (from pt in _PatientTestRepository.Table
+                          join tr in _PatientTestResultRepository.Table
+                          on pt.Id equals tr.PatientTestId
+                          where !abc.Contains(tr.PatientTestId)
+                          select pt.PatientId).ToList();
+
+          
+            var query = (from p in _PatientRepository.Table
+                         join pt in _PatientTestRepository.Table
+                         on p.Id equals pt.PatientId
+                         where check2.Contains(pt.PatientId)
+                         select p).ToList<Patient>().GroupBy(test => test.Id).Select(grp => grp.First()).ToList();
+            return query;
+        }
+
         public List<PatientTest> GetPatientTestsById(int id)
         {
             var query = (from pt in _PatientTestRepository.Table
@@ -70,6 +93,38 @@ namespace AsiaLabv1.Services
         public void InsertTechnicianPatientTests(TechnicianPatientsTest model)
         {
             _TechnicianPatientTestRepository.Insert(model);
+        }
+
+        public void UpdateTest(int id)
+        {
+            
+            int iid = (from p in _PatientTestRepository.Table
+                      where p.PatientId == id
+                      select p.Id).FirstOrDefault();
+
+            List<PatientTestResult> original = (from ptr in _PatientTestResultRepository.Table
+                                                where ptr.PatientTestId == iid
+                                                select ptr).ToList<PatientTestResult>();
+
+            if (original != null)
+            {
+                foreach (var item in original)
+                {
+                    item.ApprovalStatus = "Approved";
+                    _PatientTestResultRepository.UpdateGeneric(item);
+                }
+              
+            }    
+        }
+
+        public void InsertDoctorsPatientsTests(DoctorPatientsTest model)
+        {
+            _DoctorsPatientsTestsRepository.Insert(model);
+        }
+
+        public void InsertDoctorComments(DoctorComment model)
+        {
+            _DoctorCommentsRepository.Insert(model);
         }
     }
 }

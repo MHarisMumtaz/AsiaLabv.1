@@ -43,10 +43,12 @@
             <div class="tab-pane active" id="horizontal-form">
                 <form>
                     <div class="horz-grid">
-                        <div class="grid-hor">
+                        <div class="grid-hor" id="patientinfo">
                             <h4 id="grid-example-mixed-complete">Approve Test</h4><br />
-                            <h5 id="grid-example-mixed-complete">Patient No. 1008</h5>
-                            <h5 id="grid-example-mixed-complete">Patient Name: Akhtar</h5>
+
+
+
+
 
                         </div>
                         <!---->
@@ -65,7 +67,11 @@
 
                         </div>
 
-                        <div class="row show-grid">
+                        <div class="row show-grid" id="tests">
+
+                        </div>
+
+                        @*<div class="row show-grid">
                             <div class="col-xs-6 col-sm-3">
                                 Urine
                                 <br />
@@ -85,7 +91,7 @@
                             <div class="col-md-1">mg%</div>
 
 
-                        </div>
+                        </div>*@
 
 
                     </div>
@@ -109,7 +115,7 @@
                     <br /><br />
                     <div class="col-sm-2 login-do" style="margin-left:50%">
                         <label class="hvr-shutter-in-horizontal login-sub">
-                            <input type="submit" value="Approved" />
+                            <input type="button" id="btnapprove" value="Approved" />
                         </label>
                     </div>
                     <div class="clearfix"> </div>
@@ -128,6 +134,72 @@
 
             </div>
         </div>
+
+
+<script type="text/javascript">
+
+
+    window.onload = getTests;
+
+    function getTests() {
+
+        $.ajax({
+            type: 'GET',
+            url: '/Doctor/GetTests/',
+            dataType: "json",
+            success: function (data) {
+
+                $('#patientinfo').append('<h5 id="pno">Patient No. ' + data[0].PatientNumber + '</h5>');
+                $('#patientinfo').append('<h5 id="grid-example-mixed-complete">Patient Name: ' + data[0].PatientName + '</h5>');
+
+                for (var i = 0; i < data[0].PatientTests.length; i++) {
+
+                    $('#tests').append('<div class="col-xs-6 col-sm-3" id="testname' + i + '">' + data[0].PatientTests[i].testName + '<br /></div>');
+                    $('#tests').append('<div class="col-xs-6 col-sm-3" id="result' + i + '">' + data[0].PatientTests[i].lowerBound + '</div>');
+                    $('#tests').append('<div class="col-xs-6 col-sm-3" id="testlowerbound' + i + '">' + data[0].PatientTests[i].lowerBound + '</div>');
+                    $('#tests').append('<div class="col-xs-6 col-sm-3"  id="testupperbound' + i + '">' + data[0].PatientTests[i].upperBound + '</div>');
+                    $('#tests').append('<div class="col-md-1"  id="testunit' + i + '">' + data[0].PatientTests[i].unit + '<br /></div>');
+
+                }
+            },
+            error: function (data) {
+                alert('Error');
+            }
+        });
+
+    }
+
+
+    $('#btnapprove').click(function () {
+
+        var pid = $('#pno').text();
+        var comment = $('#txtarea1').text;
+        //alert(pid);
+       
+
+
+        $.ajax({
+
+            type: 'POST',
+            url: '/Doctor/ApprovePatientTest/',
+            traditional: true,
+            data: { patientId: pid, comments:comment },
+            dataType: "json",
+            success: function (data) {
+                //alert('Approved');
+                //Yaha achi chezay krdena :p
+                window.location.href = "/Main/DoctorDashboard"
+
+            },
+
+        });
+
+
+    });
+
+
+
+</script>
 <!--//grid-->
 <!---->
 <!--//content-->
