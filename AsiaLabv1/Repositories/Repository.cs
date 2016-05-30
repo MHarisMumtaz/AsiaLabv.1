@@ -55,6 +55,10 @@ namespace AsiaLabv1.Repositories
             Table.Add(entity);
             Context.SaveChanges();
         }
+        public void UpdateGeneric(T entity)
+        {
+            Context.SaveChanges();
+        }
 
         public void Delete(T entity)
         {

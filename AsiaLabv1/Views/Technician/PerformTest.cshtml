@@ -113,8 +113,8 @@
                     for (var i = 0; i < data[0].PatientTests.length; i++) {
                       
                         $('#tests').append('<div class="col-xs-6 col-sm-3" id="testname' + i + '">' + data[0].PatientTests[i].testName + '<br /></div>');
-                        var check = data[0].PatientTests[i].testName.subString(0, 5).toLower();
-                        alert(check);
+                        //var check = data[0].PatientTests[i].testName.subString(0, 5).toLower();
+                        //alert(check);
                         //if (data[0].PatientTests[i].testName.subString(0,5).toLower()==='x-ray') {
 
                         //}
@@ -152,7 +152,6 @@
             traditional: true,
             data: { result: results },
             dataType: "json",
-<<<<<<< HEAD
             success: function (data) {
                 alert('Performed');
                 //Yaha achi chezay krdena :p
@@ -160,9 +159,6 @@
 
             },
            
-=======
-
->>>>>>> 0d1659542e33120b0646a15d358f6f7f7446fa57
         });
 
       
