@@ -99,6 +99,18 @@
 
     window.onload = getTests;
     
+    //$('#focusedinput').onchange(function () {
+
+    //    var ar = $('#focusedinput').val();
+    //    var lb = $('#testlowerbound').val();
+    //    var ub = $('#testupperbound').val();
+
+    //    if (ar>ub) {
+    //        alert('Warning');
+    //    }
+
+
+    //});
 
     function getTests(){
 
@@ -119,13 +131,12 @@
                         //if (data[0].PatientTests[i].testName.subString(0,5).toLower()==='x-ray') {
 
                         //}
-                        $('#tests').append('<div style="margin-top:3px" class="col-md-1"  id="testresult' + i + '"><input type="text" maxlength="5" style="height:22px" class="form-control" id="actualresult"' + i + '"/"></div>');
+                        $('#tests').append('<div style="margin-top:3px" class="col-md-1"  id="testresult' + i + '"><input type="text" maxlength="5" style="height:22px" class="form-control" id="focusedinput' + i + '"/"></div>');
                         $('#tests').append('<div style="margin-top:3px" class="col-xs-1 col-sm-3" id="testlowerbound' + i + '">' + data[0].PatientTests[i].lowerBound + '</div>');
                         $('#tests').append('<div style="margin-top:3px" class="col-xs-6 col-sm-3"  id="testupperbound' + i + '">' + data[0].PatientTests[i].upperBound + '</div>');
                         $('#tests').append('<div style="margin-top:3px" class="col-md-1"  id="testunit' + i + '">' + data[0].PatientTests[i].unit + '</div>');
 
-                       
-                       
+                      
                     }
                     //Xray and Ultrasound
                     
@@ -137,18 +148,35 @@
 
     }
 
+    //$('#actualresult').onchange(function () {
+
+    //    var ar = $('#actualresult').val();
+    //    var lb = $('#testlowerbound').val();
+    //    var ub = $('#testupperbound').val();
+
+    //    if (ar > ub) {
+    //        alert('Warning');
+    //        return false;
+    //    }
+
+
+    //});
     
 
     $('#btninsert').click(function () {
+
+        
 
         var inputCount = document.getElementById('tests').getElementsByTagName('input').length;
         var results = [];
        
         for (var i = 0; i < inputCount; i++) {
          
-            testresult=$('#focusedinput'+i).val(),
+            testresult = $('#focusedinput' + i).val(),
             results.push(testresult);
+            
         }
+
 
 
         $.ajax({
