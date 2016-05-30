@@ -58,9 +58,11 @@ namespace AsiaLabv1.Controllers
             List<RequiredTest> rt = new List<RequiredTest>();
 
             _patienttestId = patientDetails[0].Id;
+            var results=pts.GetTestResultsById(_patienttestId);
             var pno = patientDetails[0].Patient.Id;
             var pname = patientDetails[0].Patient.PatientName;
             var ptests = patientDetails[0].Patient.PatientTests;
+            int pointer = 0;
 
             foreach (var item2 in ptests)
             {
@@ -70,11 +72,13 @@ namespace AsiaLabv1.Controllers
 
                     Id = item2.TestSubcategory.Id,
                     testName = item2.TestSubcategory.TestSubcategoryName,
+                    result=results[pointer].ToString(),
                     lowerBound = item2.TestSubcategory.LowerBound,
                     upperBound = item2.TestSubcategory.UpperBound,
                     unit = item2.TestSubcategory.Unit
 
                 });
+                pointer++;
 
             }
 

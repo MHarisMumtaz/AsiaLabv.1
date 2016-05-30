@@ -126,5 +126,13 @@ namespace AsiaLabv1.Services
         {
             _DoctorCommentsRepository.Insert(model);
         }
+
+        public List<string> GetTestResultsById(int id)
+        {
+            var query = (from ptr in _PatientTestResultRepository.Table
+                         where ptr.PatientTestId == id
+                         select ptr.Result).ToList();
+            return query;
+        }
     }
 }

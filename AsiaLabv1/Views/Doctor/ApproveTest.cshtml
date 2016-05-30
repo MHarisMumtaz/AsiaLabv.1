@@ -155,7 +155,7 @@
                 for (var i = 0; i < data[0].PatientTests.length; i++) {
 
                     $('#tests').append('<div class="col-xs-6 col-sm-3" id="testname' + i + '">' + data[0].PatientTests[i].testName + '<br /></div>');
-                    $('#tests').append('<div class="col-xs-6 col-sm-3" id="result' + i + '">' + data[0].PatientTests[i].lowerBound + '</div>');
+                    $('#tests').append('<div class="col-xs-6 col-sm-3" id="result' + i + '">' + data[0].PatientTests[i].result + '</div>');
                     $('#tests').append('<div class="col-xs-6 col-sm-3" id="testlowerbound' + i + '">' + data[0].PatientTests[i].lowerBound + '</div>');
                     $('#tests').append('<div class="col-xs-6 col-sm-3"  id="testupperbound' + i + '">' + data[0].PatientTests[i].upperBound + '</div>');
                     $('#tests').append('<div class="col-md-1"  id="testunit' + i + '">' + data[0].PatientTests[i].unit + '<br /></div>');

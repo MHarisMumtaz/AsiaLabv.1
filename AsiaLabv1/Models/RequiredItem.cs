@@ -19,6 +19,7 @@ namespace AsiaLabv1
         public double lowerBound { get; set; }
         public string unit { get; set; }
         public double rate { get; set; }
+        public string result { get; set; }
 
     }
 
@@ -37,14 +38,9 @@ namespace AsiaLabv1
 
         public List<RequiredTest> PatientTests { get; set; }
 
-<<<<<<< HEAD
     } 
     
 
 
     
 }
-=======
-    }
-}
->>>>>>> 735bd9f654feb66f4fab67e147ecdd990b919830
