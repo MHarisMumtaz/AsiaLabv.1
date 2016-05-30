@@ -37,14 +37,6 @@ namespace AsiaLabv1
 
         public List<RequiredTest> PatientTests { get; set; }
 
-<<<<<<< HEAD
-    } 
-    
-
-
-    
-}
-=======
     }
 }
->>>>>>> 735bd9f654feb66f4fab67e147ecdd990b919830
+
