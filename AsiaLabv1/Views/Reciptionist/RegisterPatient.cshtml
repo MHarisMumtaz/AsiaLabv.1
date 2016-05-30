@@ -128,7 +128,11 @@
                         <div id="SelectedTests">
 
                         </div>
-
+                        <div style='width:1400px' class='row show-grid'> 
+                        <div class='col-md-1'></div>
+                         <div class='col-xs-6 col-sm-4'></div>
+                        <div class='col-md-2'>TotalAmount:</div>
+                        <div class='col-md-1' id="totalAmount">0</div></div>
                     </div>
 
 
@@ -322,6 +326,9 @@
                             if (tempPatientTests[TestId].catId==currentSubCatId) {
                                 PatientTests[TestId] = tempPatientTests[TestId];
                             }
+                            netAmount = netAmount - parseInt(tempPatientTests[TestId].Rate);
+                            document.getElementById('totalAmount').innerHTML = netAmount;
+
                             delete tempPatientTests[TestId];
 
                             for (var i = 0; i < SelectedPatientTests.length; i++) {
@@ -338,15 +345,16 @@
                             for (var key in PatientTests) {
                                 $('#Tests').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'>" + key + "</div> <div class='col-xs-6 col-sm-4'>" + PatientTests[key].TestName + "</div><div class='col-md-2'>Rs." + PatientTests[key].Rate + "/=</div><div class='col-md-1'> &nbsp;<input type='checkbox' onclick='addTest(" + key + ")'></div></div>");
                             }
-                            netAmount = netAmount - parseInt(PatientTests[TestId].Rate);
-                            $('#SelectedTests').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'></div> <div class='col-xs-6 col-sm-4'></div><div class='col-md-2'>TotalAmount:</div><div class='col-md-1'>"+netAmount+"</div></div>");
-               
+                            
+                            //$('#SelectedTests').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'></div> <div class='col-xs-6 col-sm-4'></div><div class='col-md-2'>TotalAmount:</div><div class='col-md-1'>"+netAmount+"</div></div>");
+                          
                         }
 
                         function addTest(Id) {
                             $('#SelectedTests').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'>" + Id + "</div> <div class='col-xs-6 col-sm-4'>" + PatientTests[Id].TestName + "</div><div class='col-md-2'>Rs." + PatientTests[Id].Rate + "/=</div><div class='col-md-1'> &nbsp;<img src='../../images/rem_btn.png' style='margin-left:10px' width='25' height='22' onclick='removeSelectedTest(" + Id + ")' /></div></div>");
 
                             tempPatientTests[Id] = {
+                                catId: PatientTests[Id].catId,
                                 TestName: PatientTests[Id].TestName,
                                 Rate: PatientTests[Id].Rate
                             };
@@ -358,8 +366,8 @@
                             }
                             
 
-                            $('#SelectedTests').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'></div> <div class='col-xs-6 col-sm-4'></div><div class='col-md-2'>Total Amount:</div><div class='col-md-1'>"+netAmount+"</div></div>");
-
+                            //$('#SelectedTests').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'></div> <div class='col-xs-6 col-sm-4'></div><div class='col-md-2'>Total Amount:</div><div class='col-md-1'>"+netAmount+"</div></div>");
+                            document.getElementById('totalAmount').innerHTML = netAmount;
                              SelectedPatientTests.push(Id);
                         }
 
